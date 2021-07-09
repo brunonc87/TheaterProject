@@ -19,6 +19,7 @@ namespace Theater.Api.Controllers
             _roomService = roomService;
         }
 
+        // GET: api/<RoomController>
         [HttpGet]
         public IActionResult Get()
         {
