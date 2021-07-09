@@ -1,0 +1,27 @@
+Para montar o ambiente para rodar a Theater API:
+
+
+Requisitos
+1 - SQL Server (Aplicação trabalha com banco SQLServer);
+2 - .net Core 5.0 (caso rode projeto em debug);
+3 - Postman (Para executar as chamadas na API);
+
+
+Instalação
+ - Baixar o repositorio do Git (https://github.com/brunonc87/TheaterProject), branch Master;
+ - Executar o script de criação que está na pasta "Script_Create" em uma instancia do SQLServer;
+ - Copiar o conteúdo da Pasta "BuildFiles" para um diretório desejado;
+ - Editar o arquivo "TheaterConfigurations.json", configurando a conectionString, sem quebrar a estrutura do JSON;
+ - Executar o arquivo "Theater.Api.exe" para rodar a aplicação;
+
+
+Utilizando a API
+ - Importe para o PostMan o arquivo contido na pasta "PostmanRequestFile";
+ - Execute as chamadas desejadas;
+
+
+Rodar em debug
+ - Abra a solução no Visual Studio
+ - No projeto "Theater API", na pasta "bin/debug/net5.0" colocar a conectionString no arquivo "TheaterConfigurations.json";
+ - Ao rodar em debug, executará automaticamente o Swagger para fazer as chamadas;
+ - Para rodar os testes de integração, será utilizada a instancia localDB;

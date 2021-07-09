@@ -5,7 +5,7 @@ using Theater.Domain.Credentials;
 
 namespace Theater.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Authentication")]
     [ApiController]
     public class CredentialController : ControllerBase
     {
@@ -17,8 +17,7 @@ namespace Theater.Api.Controllers
         }
 
         [HttpPost]
-        [Route("Authenticate")]
-        public IActionResult Post(CredentialCommand credentialCommand)
+        public IActionResult Post([FromBody] CredentialCommand credentialCommand)
         {
             try
             {
