@@ -37,9 +37,10 @@ namespace Theater.Api.DTO.Sections
             {
                 case "3D":
                     return Domain.Sections.AnimationType.D3;
-                case "2D":
-                default:
+                case "2D":                
                     return Domain.Sections.AnimationType.D2;
+                default:
+                    throw new Exception("Tipo de animação inválido");
             }
         }
     }

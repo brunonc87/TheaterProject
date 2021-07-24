@@ -55,44 +55,28 @@ namespace Theater.Integration.Tests.Application
         }
 
         [TestMethod]
-        public void MoviesService_GetByTittle_Returns_Movie_Based_On_Tittle()
+        public void MoviesService_GetById_Returns_Movie_Based_On_Id()
         {
             Movie movie1 = new Movie { Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Movie movie2 = new Movie { Tittle = "filme 2", Description = "descrição 2", Duration = 666 };
             _moviesRepository.Insert(movie1);
             _moviesRepository.Insert(movie2);
 
-            Movie moviesOnDB = _moviesService.GetByTittle(movie2.Tittle);
+            Movie moviesOnDB = _moviesService.GetById(2);
 
             moviesOnDB.Should().NotBeNull();
             moviesOnDB.Tittle.Should().Be(movie2.Tittle);
             moviesOnDB.Description.Should().Be(movie2.Description);
             moviesOnDB.Duration.Should().Be(movie2.Duration);
-        }
+        }        
 
         [TestMethod]
-        public void MoviesService_GetByTittle_Returns_Movie_Based_On_Tittle_Case_Sensitive()
-        {
-            Movie movie1 = new Movie { Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
-            Movie movie2 = new Movie { Tittle = "filme 2", Description = "descrição 2", Duration = 666 };
-            _moviesRepository.Insert(movie1);
-            _moviesRepository.Insert(movie2);
-
-            Movie moviesOnDB = _moviesService.GetByTittle("FiLmE 2");
-
-            moviesOnDB.Should().NotBeNull();
-            moviesOnDB.Tittle.Should().Be(movie2.Tittle);
-            moviesOnDB.Description.Should().Be(movie2.Description);
-            moviesOnDB.Duration.Should().Be(movie2.Duration);
-        }
-
-        [TestMethod]
-        public void MoviesService_GetByTittle_Returns_Null_When_Movie_Is_Not_On_Database()
+        public void MoviesService_GetById_Returns_Null_When_Movie_Is_Not_On_Database()
         {
             Movie movie1 = new Movie { Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             _moviesRepository.Insert(movie1);
 
-            Movie moviesOnDB = _moviesService.GetByTittle("FiLmE 2");
+            Movie moviesOnDB = _moviesService.GetById(666);
 
             moviesOnDB.Should().BeNull();
         }

@@ -114,7 +114,7 @@ namespace Theater.Integration.Tests.Application
         {
             Movie movie1 = new Movie { Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Room room = new Room { Name = "Sala 7", SeatsNumber = 23 };
-            Section section = new Section { StartDate = DateTime.Now, Value = 12, AnimationType = AnimationType.D3, AudioType = AudioType.Original };
+            Section section = new Section { StartDate = DateTime.Now.AddDays(2), Value = 12, AnimationType = AnimationType.D3, AudioType = AudioType.Original };
             _moviesRepository.Insert(movie1);
             new RoomsRepository(_theaterContext).Insert(room);
             section.Movie = new Movie { Tittle = movie1.Tittle};

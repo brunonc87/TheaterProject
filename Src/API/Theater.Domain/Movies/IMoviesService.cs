@@ -5,7 +5,7 @@ namespace Theater.Domain.Movies
     public interface IMoviesService
     {
         IEnumerable<Movie> GetMovies();
-        Movie GetByTittle(string tittle);
+        Movie GetById(int movieId);
         void AddMovie(Movie movie);
         void UpdateMovie(Movie movie);
         void DeleteMovie(string tittle);

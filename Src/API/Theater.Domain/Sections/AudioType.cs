@@ -2,8 +2,7 @@
 {
     public enum AudioType
     {
-        Original = 0,
-        Dubbed = 1
-
+        Original = 1,
+        Dubbed = 2
     }
 }

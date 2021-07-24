@@ -19,7 +19,7 @@ namespace Theater.Domain.Movies
                 throw new Exception("Título inválido");
             if (string.IsNullOrWhiteSpace(Description))
                 throw new Exception("Descrição inválida");
-            if (Duration <= 0)
+            if (Duration <= 0 || Duration > 1440)
                 throw new Exception("Tempo do filme inválido");
         }
 
