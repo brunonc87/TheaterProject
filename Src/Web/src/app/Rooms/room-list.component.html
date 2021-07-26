@@ -1,0 +1,21 @@
+<div>   
+    <div class="tittle-bar">
+        <label class="tittle">Lista de salas</label>        
+    </div>   
+    <div class="list-items">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+              <th scope="col"></th>
+              <th scope="col">Nome da sala</th>
+              <th scope="col">Número de lugares</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let room of rooms" >
+                  <th scope="row"></th>
+                  <td>{{room.name}}</td>
+                  <td>{{room.seatsNumber}}</td>                  
+                </tr>
+            </tbody>
+        </table>        
+      </div>     
+</div>

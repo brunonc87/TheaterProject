@@ -1,0 +1,63 @@
+.page {
+    background: rgb(79, 91, 197);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.auth-info {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 5px solid rgba(79, 91, 197, 0.6);
+    width: 450px;
+    height: 320px;    
+}
+
+.tittle-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 28px;    
+    padding-left: 20px;
+    flex-grow: 1;
+    padding-top: 5px;    
+
+    i.material-icons {
+        margin-right: 10px;
+        font-size: 30px;
+    }
+}
+
+.app-logon {
+    padding: 30px;
+}
+
+.button-layer {
+    padding-top: 20px;
+    padding-left: 285px;
+    height: 100%;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+}
+
+.input-layer {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.input {    
+    width: 100%;
+    border: 0px;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.lbl {
+    color: white;
+    font-size: 20px;
+}
+
+.buttons {
+    font-size: 18px;
+}

@@ -1,0 +1,35 @@
+<div class="page-container">
+    <div class="topbar">
+        <div class="tittle-bar">
+            
+            <div class="tittle-text">
+                <i class="material-icons">maps_home_work</i>
+                CINE MOVEL
+            </div>
+            <a class="logout-text">Sair</a> 
+        </div>
+    </div>
+    <div class="body-content">
+        <div class="sidebar">
+            <div class="list-items">
+                <a routerLink="/movies" routerLinkActive="selected" class="list-item">
+                    <i class="material-icons">theaters</i>
+                    Filmes
+                </a>
+                <a routerLink="/rooms" routerLinkActive="selected" class="list-item">
+                    <i class="material-icons">chair</i>
+                    Salas
+                </a>
+                <a routerLink="/sections" routerLinkActive="selected" class="list-item">
+                    <i class="material-icons">date_range</i>
+                    Seções
+                </a>
+            </div>
+        </div>
+
+        <div class="page-body-content">
+            <router-outlet></router-outlet>
+        </div>
+        
+    </div>
+</div>

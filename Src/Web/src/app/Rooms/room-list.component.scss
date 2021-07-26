@@ -1,0 +1,33 @@
+.tittle-bar {
+    background: rgba(0, 0, 0, 0.1);
+
+    font-family: sans-serif;    
+    display: inline-flex;
+    float: left;
+    width: 98%;
+    height: 98%;
+}
+
+.tittle {
+    color: rgba(255, 255, 255, 0.7);
+    flex-grow: 1;
+    padding-left: 30px;
+    font-size: 30px;
+    padding-top: 3px;
+}
+
+.add-button {
+    margin-right: 20px;
+    margin-top: 6px;
+    margin-bottom: 3px;
+}
+
+.list-items {
+    padding-top: 100px;
+    padding-left: 20px;    
+}
+
+.table {
+    background: rgba(255, 255, 255, 0.7);
+    width: 98%;
+}

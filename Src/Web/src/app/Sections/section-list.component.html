@@ -1,0 +1,39 @@
+<div>  
+    <div class="tittle-bar">
+        <label class="tittle">Lista de seções</label>
+        <div class="add-button">
+            <a routerLink="/section-add"><button class="buttons" >Adicionar</button></a>
+        </div>        
+    </div>   
+    <div class="list-items">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+              <th scope="col"></th>
+              <th scope="col">Filme</th>
+              <th scope="col">Data</th>
+              <th scope="col">Duração</th>
+              <th scope="col">Audio</th>
+              <th scope="col">Animação</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Sala</th>
+              <th scope="col">Nº se lugares</th>
+              <th scope="col"></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let section of sections" >
+                  <th scope="row"></th>
+                  <td>{{section.movieTittle}}</td>
+                  <td>{{section.startDate | date:'short'}}</td>
+                  <td>{{section.duration}} min</td>
+                  <td>{{ parseAudioIdToValue(section.audioType) }}</td>
+                  <td>{{section.animationType}}</td>
+                  <td>{{ section.value | currency }}</td>
+                  <td>{{section.roomName}}</td>
+                  <td>{{section.numberOfSeats}}</td>
+                  <td><button type="button" class="buttons" (click)="deleteSection(section.id);">Excluir</button></td>
+                </tr>
+            </tbody>
+        </table>        
+      </div>     
+</div>
+
