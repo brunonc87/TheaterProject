@@ -1,0 +1,55 @@
+<div class="tittle-bar">
+    <label class="tittle">Adicionar Seção</label>    
+</div> 
+
+<div class="list-items">
+    <table class="table">
+        <tbody>
+            <tr>
+              <th scope="row"></th>
+              <td><label class="lbl" for="startdate">Data de início da seção</label></td>
+              <td><input class="text-input" type="datetime-local" id="startdate" required name="startdate" [(ngModel)]="sectionAddCommand.startDate"></td>              
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td><label class="lbl" for="sectionvalue">Valor da seção</label></td>
+                <td><input class="text-input" currencyMask [(ngModel)]="sectionAddCommand.value"/></td>              
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td><label class="lbl" for="animationType">Tipo de animação</label></td>
+                <td><select class="select-input" id="animationType" required [(ngModel)]="sectionAddCommand.animationType">
+                    <option *ngFor="let animationType of animationTypes" [value]="animationType">{{animationType}}</option>
+                  </select></td>              
+            </tr>
+            <tr>    
+                <th scope="row"></th>
+                <td><label class="lbl" for="audioType">Audio</label></td>
+                <td><select class="select-input" id="audioType" required [(ngModel)]="selectedAudio" >
+                    <option *ngFor="let audioType of audioTypes" [value]="audioType">{{ audioType }}</option>
+                  </select></td>              
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td><label class="lbl" for="movie">Filme</label></td>
+                <td><select class="select-input" id="movie" required [(ngModel)]="sectionAddCommand.movieTittle">
+                    <option *ngFor="let movie of movies" [value]="movie">{{movie}}</option>
+                  </select></td>              
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td><label class="lbl" for="room">Sala</label></td>
+                <td> <select class="select-input" id="room" required [(ngModel)]="sectionAddCommand.roomName">
+                    <option *ngFor="let room of rooms" [value]="room">{{room}}</option>
+                  </select></td>              
+            </tr>
+        </tbody>
+    </table>        
+  </div>     
+
+<div class="tittle-bar">
+    <label class="tittle"></label>    
+    <div class="add-button">
+        <a routerLink="/section-add"><button class="buttons" (click)="addSection();">Adicionar</button></a>
+    </div>        
+</div>  

@@ -1,0 +1,30 @@
+<div>   
+    <div class="tittle-bar">
+        <label class="tittle">Lista de filmes</label>
+        <div class="add-button">
+            <a routerLink="/movie-add"><button class="buttons">Adicionar</button></a>
+        </div>        
+    </div>   
+    <div class="list-items">
+      <table class="table table-striped">
+          <thead class="thead-dark">
+            <th scope="col"></th>
+            <th scope="col">Título</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Duração</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </thead>
+          <tbody>
+              <tr *ngFor="let movie of movies" >
+                <th scope="row"></th>
+                <td>{{movie.tittle}}</td>
+                <td>{{movie.description}}</td>
+                <td>{{movie.duration}} min</td>
+                <td><button class="buttons" type="button" (click)="editMovie(movie.id)">Editar</button></td>
+                <td><button class="buttons" type="button" (click)="deleteMovie(movie.tittle);">Excluir</button></td>
+              </tr>
+          </tbody>
+      </table>        
+    </div>     
+</div>

@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+html, body {
+    height: 100%;
+    margin:0%;  
+    font-family:'Segoe UI';
+}
+
+.buttons {
+    background-color: white;
+    color: black;
+     border: 2px solid gray; /* Green */
+    font-size: 14px;
+    padding: 2px 5px;
+    border-radius: 6px;
+}

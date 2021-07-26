@@ -1,0 +1,15 @@
+<body class="page">  
+        <div class="auth-info">
+            <div class="tittle-text">
+                <i class="material-icons">maps_home_work</i>
+                CINE MOVEL
+            </div>
+            <div class="app-logon">
+                <div ><label class="lbl" for="login">Login</label></div>
+                <div class="input-layer"><input class="input" type="text" id="login" required [(ngModel)]="usercredential.login" name="login"></div>
+                <div ><label class="lbl" for="password">Senha</label></div>
+                <div class="input-layer"><input class="input" type="password" id="password" required [(ngModel)]="usercredential.password" name="password"></div>
+                <div class="button-layer"><button type="button" class="buttons" (click)="authenticate();">Autenticar</button></div>
+            </div>        
+        </div>        
+</body>
