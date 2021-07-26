@@ -25,3 +25,24 @@ Rodar em debug
  - No projeto "Theater API", na pasta "bin/debug/net5.0" colocar a conectionString no arquivo "TheaterConfigurations.json";
  - Ao rodar em debug, executará automaticamente o Swagger para fazer as chamadas;
  - Para rodar os testes de integração, será utilizada a instancia localDB;
+
+
+/*-----------------------------------------------------------------------------*/
+
+para montar o ambiente para rodar o front-end do TheaterProject
+
+Requisitos
+1 - IIS
+
+Instalação
+ - Baixar o repositorio do Git (https://github.com/brunonc87/TheaterProject), branch Master;
+ - Criar o diretorio c:\inetpub\wwwroot\cine
+ - Copiar o conteúdo da pasta "BuildFiles\Web" para o diretorio acima
+ - Abrir o cmd e acessar a pasta c:\windows\system32\inetsrv
+ - Executar o comando 'appcmd add site /name:cine /id:2 /physicalPath:"c:\inetpub\wwwroot\cine" /bindings:http/*:4000:'
+ - acessar o endereço http://localhost:4000, com a api rodando para acessar os dados.
+
+
+Rodar em Debug
+ - Necessário o angular CLI instalado
+ - abrir a solução da web no vscode e rodar o comando ngserve
