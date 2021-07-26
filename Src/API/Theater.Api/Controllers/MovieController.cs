@@ -46,14 +46,14 @@ namespace Theater.Api.Controllers
         }
 
         // GET api/<MovieController>/tittle
-        [HttpGet("{tittle}")]
-        public IActionResult Get(string tittle)
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
             try
             {
                 MovieModel movieModel = new MovieModel();
 
-                Movie movie = _movieService.GetByTittle(tittle);
+                Movie movie = _movieService.GetById(id);
                 if (movie != null)
                     movieModel.ConvertMovieToModel(movie);
 

@@ -22,9 +22,9 @@ namespace Theater.Application.Movies
             return _movieRepository.GetAll();
         }
 
-        public Movie GetByTittle(string tittle)
+        public Movie GetById(int movieId)
         {
-            return _movieRepository.GetByTittle(tittle);
+            return _movieRepository.GetByID(movieId);
         }
 
         public void AddMovie(Movie movie)

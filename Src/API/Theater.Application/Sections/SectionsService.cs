@@ -22,8 +22,20 @@ namespace Theater.Application.Sections
 
         public void AddSection(Section section)
         {
-            section.Movie = _movieRepository.GetByTittle(section.Movie.Tittle);
-            section.Room = _roomRepository.GetByName(section.Room.Name);
+            section.Validate();
+
+            Movie movieOnDB = _movieRepository.GetByTittle(section.Movie.Tittle);
+
+            if (movieOnDB == null)
+                throw new Exception("Filme não localizado");
+
+            Room roomOnDB = _roomRepository.GetByName(section.Room.Name);
+
+            if (roomOnDB == null)
+                throw new Exception("Sala não localizada");
+
+            section.Movie = movieOnDB;
+            section.Room = roomOnDB;
 
             List<Section> sectionsOnDB = _sectionRepository.GetAll().ToList();
 
