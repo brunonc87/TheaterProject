@@ -1,6 +1,6 @@
+import { RoomService } from './shared/room.service';
 import { Component, OnInit } from '@angular/core';
-import { IRoom } from './room';
-import { RoomService } from './room.service';
+import { IRoom } from './shared/room';
 
 @Component({
   selector: 'app-room-list',
@@ -10,7 +10,7 @@ import { RoomService } from './room.service';
 export class RoomListComponent implements OnInit {
 
   rooms: IRoom[] = [];
-  
+
   constructor(private roomService: RoomService) { }
 
   ngOnInit(): void {

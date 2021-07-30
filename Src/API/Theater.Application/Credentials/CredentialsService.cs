@@ -12,13 +12,13 @@ namespace Theater.Application.Credentials
             _credentialsRepository = credentialsRepository;
         }
 
-        public bool Authenticate(string login, string password)
+        public bool Authenticate(Credential credential)
         {
-            Credential authenticatedUser = _credentialsRepository.RetrieveByLogonName(login);
+            Credential authenticatedUser = _credentialsRepository.RetrieveByLogonName(credential.Login);
             if (authenticatedUser == null)
                 throw new Exception("Usuário não localizado");
 
-            return authenticatedUser.ValidatePassword(password);
+            return authenticatedUser.ValidatePassword(credential.Password);
         }
     }
 }

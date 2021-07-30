@@ -1,6 +1,8 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Theater.Application.Movies.Commands;
 using Theater.Domain.Movies;
 using Theater.Domain.Sections;
 

@@ -1,11 +1,12 @@
 .tittle-bar {
-    background: rgba(0, 0, 0, 0.1);
 
-    font-family: sans-serif;    
-    display: inline-flex;
-    float: left;
-    width: 98%;
-    height: 45px;
+  background: #4f5abe;
+  font-family: sans-serif;
+  display: inline-flex;
+  float: left;
+  width: calc(98% - 140px);
+  height: 50px;
+  position: fixed;
 }
 
 .tittle {
@@ -19,7 +20,7 @@
 .add-button {
     margin-right: 20px;
     margin-top: 6px;
-    margin-bottom: 3px;    
+    margin-bottom: 3px;
 }
 
 .table {
@@ -28,8 +29,8 @@
 
 .list-items {
     padding-top: 80px;
-    padding-left: 20px;    
-    padding-bottom: 20px;    
+    padding-left: 20px;
+    padding-bottom: 20px;
 }
 
 .text-input {

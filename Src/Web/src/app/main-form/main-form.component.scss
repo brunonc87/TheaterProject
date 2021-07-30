@@ -1,6 +1,5 @@
-.page-container {    
-    height: 100%;
-    background: rgb(79, 91, 197);
+.page-container {
+    height: fit-content;
 }
 
 .body-content {
@@ -9,15 +8,18 @@
 }
 
 .sidebar {
-    height: 100%;
+    height: calc(100% - 50px);
     width: 150px;
-    background: rgba(0, 0, 0, 0.2);    
+    background: #4650aa;
+    position: fixed;
+    margin-top: 50px;
 }
 
 .topbar {
     height: 50px;
     width: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgb(65, 76, 172);
+    position: fixed;
 }
 
 .list-items {
@@ -28,7 +30,7 @@
     display: flex;
     font-size: 24px;
     color: rgba(255, 255, 255, 0.8);
-    padding: 10px  20px;        
+    padding: 10px  20px;
     align-items: center;
     cursor: pointer;
     text-decoration: none;
@@ -37,7 +39,7 @@
         margin-right: 10px;
         font-size: 28px;
     }
-}   
+}
 
 .list-item:hover {
     color: orange;
@@ -49,14 +51,14 @@
 
 .tittle-bar {
     color: rgb(211, 219, 219);
-    font-family: sans-serif;    
+    font-family: sans-serif;
     display: inline-flex;
     float: left;
     width: 98%;
 }
 
 .tittle-text {
-    font-size: 28px;    
+    font-size: 28px;
     padding-left: 20px;
     flex-grow: 1;
     padding-top: 5px;
@@ -73,7 +75,7 @@
     flex: 0 0 auto;
     flex-shrink: 0;
     padding-top: 10px;
-    cursor: pointer;    
+    cursor: pointer;
     text-decoration: none;
 }
 
@@ -82,8 +84,8 @@
 }
 
 .page-body-content {
-    padding: 0px;
-    padding-top: 0px;
+    padding-left: 150px;
+    padding-top: 50px;
     width: 100%;
     height: 100%;
 }

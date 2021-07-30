@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Theater.Api.DTO.Sections;
+using System.Linq;
+using Theater.Application.Sections.Commands;
+using Theater.Application.Sections.Models;
 using Theater.Domain.Sections;
 
 namespace Theater.Api.Controllers
@@ -12,10 +15,12 @@ namespace Theater.Api.Controllers
     public class SectionController : ControllerBase
     {
         private readonly ISectionsService _sectionService;
+        private readonly IMapper _mapper;
 
-        public SectionController(ISectionsService sectionService)
+        public SectionController(ISectionsService sectionService, IMapper mapper)
         {
             _sectionService = sectionService;
+            _mapper = mapper;
         }
 
         // GET: api/<MovieController>
@@ -24,17 +29,9 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                List<SectionModel> sectionModels = new List<SectionModel>();
                 IEnumerable<Section> sections = _sectionService.GetSections();
 
-                foreach (Section section in sections)
-                {
-                    SectionModel sectionModel = new SectionModel();
-                    sectionModel.ConsertSectionToModel(section);
-                    sectionModels.Add(sectionModel);
-                }
-
-                return Ok(sectionModels);
+                return Ok(_mapper.Map<IEnumerable<SectionModel>>(sections));
             }
             catch (Exception ex)
             {
@@ -48,7 +45,11 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                _sectionService.AddSection(sectionAddCommand.ConvertToSection());
+                ValidationResult result = sectionAddCommand.Validate();
+                if (!result.IsValid)
+                    return BadRequest(result.Errors.First().ErrorMessage);
+
+                _sectionService.AddSection(_mapper.Map<Section>(sectionAddCommand));
                 return Ok();
             }
             catch (Exception ex)

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ISection } from './section';
 import { SectionService } from './section.service';
@@ -10,8 +11,8 @@ import { SectionService } from './section.service';
 export class SectionListComponent implements OnInit {
 
   sections: ISection[] = [];
-  
-  constructor(private sectionService: SectionService) { }
+
+  constructor(private sectionService: SectionService, private router: Router) { }
 
   ngOnInit(): void {
     this.getSections();
@@ -21,7 +22,7 @@ export class SectionListComponent implements OnInit {
     this.sectionService.getSections().subscribe((sections) => { this.sections = sections; }, (error) => {
       console.log(error)
    });
-   
+
   }
 
   deleteSection(sectionId: number): void {
@@ -31,8 +32,8 @@ export class SectionListComponent implements OnInit {
         alert(error)
      });
     }
-    
-  }  
+
+  }
 
   public parseAudioIdToValue (id: number) : string {
     switch (id) {
@@ -41,11 +42,14 @@ export class SectionListComponent implements OnInit {
         case 1:
         default:
             return 'Original';
-    }   
+    }
   }
 
   reload(): void {
     this.getSections();
+  }
 
-}   
+  addSection(): void {
+    this.router.navigate(["sections/add"]);
+  }
 }

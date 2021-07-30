@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MovieAddCommand } from '../movie';
-import { MovieService } from '../movie.service';
+import { MovieAddCommand } from '../shared/movie';
+import { MovieService } from '../shared/movie.service';
+
 
 @Component({
   selector: 'app-movie-add',
@@ -12,17 +13,17 @@ export class MovieAddComponent implements OnInit {
 
   movie = new MovieAddCommand();
   constructor(private movieService: MovieService, private router: Router) { }
-  
+
   ngOnInit(): void {
   }
 
   addMovie(): void {
     this.movieService.addMovie(this.movie).subscribe(
-      () => { 
-        this.router.navigate(['/movies']); 
-      }, 
-      (error) => { 
+      () => {
+        this.router.navigate(['/movies']);
+      },
+      (error) => {
         alert(error)
-      });    
+      });
   }
 }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Theater.Api.Dependencies;
+using Theater.Api.Helpers;
 
 namespace Theater.Api
 {
@@ -33,7 +33,9 @@ namespace Theater.Api
 
             services.AddServiceDependency();
 
-            services.AddControllers();        
+            services.AddControllers();
+
+            services.AddApplicationMapping();
 
             services.AddSwaggerGen(c =>
             {
