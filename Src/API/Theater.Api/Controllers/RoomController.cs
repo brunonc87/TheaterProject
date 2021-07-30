@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Theater.Api.DTO.Rooms;
+using Theater.Application.Rooms.Models;
 using Theater.Domain.Rooms;
 
 namespace Theater.Api.Controllers
@@ -13,10 +12,12 @@ namespace Theater.Api.Controllers
     public class RoomController : ControllerBase
     {
         private readonly IRoomsService _roomService;
+        private readonly IMapper _mapper;
 
-        public RoomController(IRoomsService roomService)
+        public RoomController(IRoomsService roomService, IMapper mapper)
         {
             _roomService = roomService;
+            _mapper = mapper;
         }
 
         // GET: api/<RoomController>
@@ -25,17 +26,9 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                List<RoomModel> roomModels = new List<RoomModel>();
                 IEnumerable<Room> rooms = _roomService.GetRooms();
 
-                foreach (Room room in rooms)
-                {
-                    RoomModel roomModel = new RoomModel();
-                    roomModel.ConvertRoomToModel(room);
-                    roomModels.Add(roomModel);
-                }
-
-                return Ok(roomModels);
+                return Ok(_mapper.Map<IEnumerable<RoomModel>>(rooms));
             }
             catch (Exception ex)
             {

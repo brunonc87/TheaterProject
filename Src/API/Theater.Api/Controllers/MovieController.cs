@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Theater.Api.DTO.Movies;
+using System.Linq;
+using Theater.Application.Movies;
+using Theater.Application.Movies.Commands;
+using Theater.Application.Movies.Models;
 using Theater.Domain.Movies;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,10 +18,12 @@ namespace Theater.Api.Controllers
     public class MovieController : ControllerBase
     {
         private readonly IMoviesService _movieService;
+        private readonly IMapper _mapper;
 
-        public MovieController(IMoviesService movieService)
+        public MovieController(IMoviesService movieService, IMapper mapper)
         {
             _movieService = movieService;
+            _mapper = mapper;
         }
 
         // GET: api/<MovieController>
@@ -27,17 +32,9 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                List<MovieModel> movieModels = new List<MovieModel>();
                 IEnumerable<Movie> movies = _movieService.GetMovies();
 
-                foreach (Movie movie in movies)
-                {
-                    MovieModel movieModel = new MovieModel();
-                    movieModel.ConvertMovieToModel(movie);
-                    movieModels.Add(movieModel);
-                }
-
-                return Ok(movieModels);
+                return Ok(_mapper.Map<IEnumerable<MovieModel>>(movies));
             }
             catch (Exception ex)
             {
@@ -51,13 +48,9 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                MovieModel movieModel = new MovieModel();
-
                 Movie movie = _movieService.GetById(id);
-                if (movie != null)
-                    movieModel.ConvertMovieToModel(movie);
 
-                return Ok(movieModel);
+                return Ok(_mapper.Map<MovieModel>(movie));
             }
             catch (Exception ex)
             {
@@ -71,7 +64,12 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                _movieService.AddMovie(movieAddCommand.ConvertToMovie());
+                ValidationResult result = movieAddCommand.Validate();
+                if (!result.IsValid)
+                    return BadRequest(result.Errors.First().ErrorMessage);
+
+                _movieService.AddMovie(_mapper.Map<Movie>(movieAddCommand));
+
                 return Ok();
             }
             catch (Exception ex)
@@ -86,7 +84,12 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                _movieService.UpdateMovie(movieUpdateCommand.ConvertToMovie());
+                ValidationResult result = movieUpdateCommand.Validate();
+                if (!result.IsValid)
+                    return BadRequest(result.Errors.First().ErrorMessage);
+
+                _movieService.UpdateMovie(_mapper.Map<Movie>(movieUpdateCommand));
+
                 return Ok();
             }
             catch (Exception ex)

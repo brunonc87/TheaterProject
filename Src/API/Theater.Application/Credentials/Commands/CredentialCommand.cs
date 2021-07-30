@@ -1,4 +1,4 @@
-﻿namespace Theater.Api.DTO.Credentials
+﻿namespace Theater.Application.Credentials.Commands
 {
     public class CredentialCommand
     {

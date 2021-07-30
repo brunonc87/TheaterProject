@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using System.IO;
 using Theater.Application.Credentials;
 using Theater.Application.Movies;
 using Theater.Application.Rooms;
@@ -13,7 +11,7 @@ using Theater.Domain.Sections;
 using Theater.Infra.Data.Common;
 using Theater.Infra.Data.Repositories;
 
-namespace Theater.Api.Dependencies
+namespace Theater.Api.Helpers
 {
     public static class ServicesDependency
     {
@@ -32,6 +30,6 @@ namespace Theater.Api.Dependencies
             services.AddTransient<ISectionsService, SectionsService>();
         }
 
-       
+
     }
 }

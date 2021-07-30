@@ -1,10 +1,10 @@
-<div>  
+<div>
     <div class="tittle-bar">
         <label class="tittle">Lista de seções</label>
         <div class="add-button">
-            <a routerLink="/section-add"><button class="buttons" >Adicionar</button></a>
-        </div>        
-    </div>   
+            <button class="buttons" (click)="addSection()">Adicionar</button>
+        </div>
+    </div>
     <div class="list-items">
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -33,7 +33,7 @@
                   <td><button type="button" class="buttons" (click)="deleteSection(section.id);">Excluir</button></td>
                 </tr>
             </tbody>
-        </table>        
-      </div>     
+        </table>
+      </div>
 </div>
 

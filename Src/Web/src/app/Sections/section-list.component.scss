@@ -1,11 +1,12 @@
 .tittle-bar {
-    background: rgba(0, 0, 0, 0.1);
 
-    font-family: sans-serif;    
+    background: #4f5abe;
+    font-family: sans-serif;
     display: inline-flex;
     float: left;
-    width: 98%;
-    height: 98%;
+    width: calc(98% - 140px);
+    height: 50px;
+    position: fixed;
 }
 
 .tittle {
@@ -24,7 +25,7 @@
 
 .list-items {
     padding-top: 100px;
-    padding-left: 20px;    
+    padding-left: 20px;
 }
 
 .table {

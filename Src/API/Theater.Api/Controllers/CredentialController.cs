@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using Theater.Api.DTO.Credentials;
+using Theater.Application.Credentials.Commands;
 using Theater.Domain.Credentials;
 
 namespace Theater.Api.Controllers
@@ -10,10 +11,12 @@ namespace Theater.Api.Controllers
     public class CredentialController : ControllerBase
     {
         private readonly ICredentialsService _credentialsService;
+        private readonly IMapper _mapper;
 
-        public CredentialController(ICredentialsService credentialsService)
+        public CredentialController(ICredentialsService credentialsService, IMapper mapper)
         {
             _credentialsService = credentialsService;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -21,7 +24,7 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                bool result = _credentialsService.Authenticate(credentialCommand.Login, credentialCommand.Password);
+                bool result = _credentialsService.Authenticate(_mapper.Map<Credential>(credentialCommand));
                 return Ok(result);
             }
             catch (Exception ex)

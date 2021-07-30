@@ -1,13 +1,8 @@
+import { NotFoundComponent } from './not-found/not-found.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationComponent } from './Authentication/authentication.component';
 import { MainFormComponent } from './main-form/main-form.component';
-import { MovieAddComponent } from './Movies/movie-add/movie-add.component';
-import { MovieEditComponent } from './Movies/movie-edit/movie-edit.component';
-import { MovieListComponent } from './Movies/movie-list.component';
-import { RoomListComponent } from './Rooms/room-list.component';
-import { SectionAddComponent } from './Sections/section-add/section-add.component';
-import { SectionListComponent } from './Sections/section-list.component';
 
 const routes: Routes = [
   {
@@ -17,33 +12,30 @@ const routes: Routes = [
   {
     path: '',
     component: MainFormComponent,
-    children: [ 
+    children: [
       {
         path: 'movies',
-        component: MovieListComponent        
-      },
-      {
-        path: 'movie-add',
-        component: MovieAddComponent
-      },
-      {
-        path: 'movie-edit/:id',
-        component: MovieEditComponent
+        loadChildren: () => import("./movies/movies.module").then(x => x.MoviesModule)
       },
       {
         path: 'rooms',
-        component: RoomListComponent
+        loadChildren: () => import("./rooms/rooms.module").then(x => x.RoomsModule)
       },
       {
         path: 'sections',
-        component: SectionListComponent
-      },
-      {
-        path: 'section-add',
-        component: SectionAddComponent
+        loadChildren: () => import("./sections/sections.module").then(x => x.SectionsModule)
       }
     ]
   },
+  {
+    path: '**',
+    redirectTo: '404-not-found'
+  },
+  {
+    path: '404-not-found',
+    loadChildren: () => import("./not-found/not-found.module").then(x => x.NotFoundModule),
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

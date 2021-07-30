@@ -1,9 +1,10 @@
+import { RoomService } from './../../rooms/shared/room.service';
+import { MovieService } from './../../movies/shared/movie.service';
+import { SectionService } from './../section.service';
+import { SectionAddCommand } from './../section';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MovieService } from 'src/app/Movies/movie.service';
-import { RoomService } from 'src/app/Rooms/room.service';
-import { SectionAddCommand } from '../section';
-import { SectionService } from '../section.service';
+
 
 @Component({
   selector: 'app-section-add',
@@ -19,7 +20,7 @@ export class SectionAddComponent implements OnInit {
   sectionAddCommand: SectionAddCommand = new SectionAddCommand();
   selectedAudio: string = '';
 
-  constructor(private sectionService: SectionService, private movieService: MovieService, 
+  constructor(private sectionService: SectionService, private movieService: MovieService,
     private roomService: RoomService, private router: Router) { }
 
   ngOnInit(): void {

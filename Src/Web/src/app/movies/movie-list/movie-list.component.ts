@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { IMovie } from "./movie";
-import { MovieService } from "./movie.service";
+import { IMovie } from "../shared/movie";
+import { MovieService } from "../shared/movie.service";
 
 @Component({
     selector: 'movie-list',
@@ -9,9 +9,9 @@ import { MovieService } from "./movie.service";
     styleUrls: ['./movie-list.component.scss']
   })
   export class MovieListComponent implements OnInit{
-    
+
     constructor(private movieService: MovieService, private router: Router) {
-    
+
 
     }
     movies: IMovie[] = [];
@@ -33,11 +33,15 @@ import { MovieService } from "./movie.service";
     }
 
     editMovie(movieId: number): void {
-        this.router.navigate(["/movie-edit", movieId]);
+        this.router.navigate(["/movies/edit", movieId]);
     }
 
      reload(): void {
          this.getMovies();
 
-     }   
+     }
+
+     addMovie(): void {
+       this.router.navigate(["movies/add"]);
+     }
   }

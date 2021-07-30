@@ -35,9 +35,15 @@ namespace Theater.Integration.Tests.Application
                 Password = password
             };
 
+            Credential credentialToAuthenticate = new Credential()
+            {
+                Login = login,
+                Password = password
+            };
+
             _credentialsRepository.AddCredential(credential);
 
-            bool result = _credentialsService.Authenticate(login, password);
+            bool result = _credentialsService.Authenticate(credentialToAuthenticate);
 
             result.Should().BeTrue();
         }
@@ -54,9 +60,15 @@ namespace Theater.Integration.Tests.Application
                 Password = password
             };
 
+            Credential credentialToAuthenticate = new Credential()
+            {
+                Login = login,
+                Password = "asdf"
+            };
+
             _credentialsRepository.AddCredential(credential);
 
-            bool result = _credentialsService.Authenticate(login, "asdf");
+            bool result = _credentialsService.Authenticate(credentialToAuthenticate);
 
             result.Should().BeFalse();
         }
@@ -73,9 +85,16 @@ namespace Theater.Integration.Tests.Application
                 Password = password
             };
 
+            Credential credentialToAuthenticate = new Credential()
+            {
+                Login = "quert",
+                Password = "asdf"
+            };
+
+
             _credentialsRepository.AddCredential(credential);
 
-            Action act = () => _credentialsService.Authenticate("qwert", "asdf");
+            Action act = () => _credentialsService.Authenticate(credentialToAuthenticate);
 
             act.Should().Throw<Exception>().WithMessage("Usuário não localizado");
         }
