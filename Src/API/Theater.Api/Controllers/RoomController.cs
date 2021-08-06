@@ -1,9 +1,8 @@
-﻿using AutoMapper;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using Theater.Application.Rooms.Models;
-using Theater.Domain.Rooms;
+using System.Threading.Tasks;
+using Theater.Application.Rooms.Querys;
 
 namespace Theater.Api.Controllers
 {
@@ -11,24 +10,20 @@ namespace Theater.Api.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
-        private readonly IRoomsService _roomService;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public RoomController(IRoomsService roomService, IMapper mapper)
+        public RoomController(IMediator mediator)
         {
-            _roomService = roomService;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         // GET: api/<RoomController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                IEnumerable<Room> rooms = _roomService.GetRooms();
-
-                return Ok(_mapper.Map<IEnumerable<RoomModel>>(rooms));
+                return Ok(await _mediator.Send(new AllRoomsQuery()));
             }
             catch (Exception ex)
             {

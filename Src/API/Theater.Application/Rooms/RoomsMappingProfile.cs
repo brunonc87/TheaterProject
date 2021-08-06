@@ -4,9 +4,9 @@ using Theater.Domain.Rooms;
 
 namespace Theater.Application.Rooms
 {
-    public class MappingProfile : Profile
+    public class RoomsMappingProfile : Profile
     {
-        public MappingProfile()
+        public RoomsMappingProfile()
         {
             CreateMap<Room, RoomModel>();
         }

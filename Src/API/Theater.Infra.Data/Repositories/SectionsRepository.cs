@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Theater.Domain.Sections;
 using Theater.Infra.Data.Common;
 
@@ -17,11 +15,11 @@ namespace Theater.Infra.Data.Repositories
             _theaterContext = theaterContext;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             Section section = _theaterContext.Sections.FirstOrDefault(s => s.SectionID == id);
             _theaterContext.Sections.Remove(section);
-            _theaterContext.SaveChanges();
+            return _theaterContext.SaveChanges() > 0;
         }
 
         public IEnumerable<Section> GetAll()
@@ -39,10 +37,10 @@ namespace Theater.Infra.Data.Repositories
             return _theaterContext.Sections.Include(s => s.Movie).Where(s => s.Movie.MovieID == movieID);
         }
 
-        public void Insert(Section section)
+        public bool Insert(Section section)
         {
             _theaterContext.Sections.Add(section);
-            _theaterContext.SaveChanges();
+            return _theaterContext.SaveChanges() > 0;
         }
     }
 }

@@ -1,27 +1,31 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
+using MediatR;
 
 namespace Theater.Application.Movies.Commands
 {
-    public class MovieAddCommand
+    public class MovieAddCommand : IRequest<bool>
     {
         public string Tittle { get; set; }
         public string Description { get; set; }
         public int Duration { get; set; }
+    }
 
-        public virtual ValidationResult Validate()
+    public class MovieAddCommandValidator : AbstractValidator<MovieAddCommand>
+    {
+        public MovieAddCommandValidator()
         {
-            return new Validator().Validate(this);
-        }
-
-        class Validator : AbstractValidator<MovieAddCommand>
-        {
-            public Validator()
-            {
-                RuleFor(m => m.Tittle).NotNull().NotEmpty().MinimumLength(1).MaximumLength(250).WithMessage("Título inválido");
-                RuleFor(m => m.Description).NotNull().NotEmpty().MinimumLength(1).MaximumLength(250).WithMessage("Descrição inválida");
-                RuleFor(m => m.Duration).NotNull().NotEmpty().GreaterThanOrEqualTo(1).LessThanOrEqualTo(1440).WithMessage("Tempo do filme inválido");
-            }
+            RuleFor(m => m.Tittle)
+                .NotEmpty().WithMessage("Título inválido")
+                .MinimumLength(1).WithMessage("Título inválido")
+                .MaximumLength(250).WithMessage("Título inválido");
+            RuleFor(m => m.Description)
+                .NotEmpty().WithMessage("Descrição inválida")
+                .MinimumLength(1).WithMessage("Descrição inválida")
+                .MaximumLength(250).WithMessage("Descrição inválida");
+            RuleFor(m => m.Duration)
+                .NotEmpty().WithMessage("Duração do filme inválida")
+                .GreaterThanOrEqualTo(1).WithMessage("Duração do filme inválida")
+                .LessThanOrEqualTo(1440).WithMessage("Duração do filme inválida");
         }
     }
 }

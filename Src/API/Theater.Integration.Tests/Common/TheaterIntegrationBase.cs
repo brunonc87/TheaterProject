@@ -1,6 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Respawn;
+﻿using AutoMapper;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.SqlClient;
+using Theater.Application.Credentials;
+using Theater.Application.Movies;
+using Theater.Application.Rooms;
+using Theater.Application.Sections;
 using Theater.Infra.Data.Common;
 
 namespace Theater.Integration.Tests.Common
@@ -9,14 +13,12 @@ namespace Theater.Integration.Tests.Common
     public class TheaterIntegrationBase
     {
         private static string _theaterConnectionString;
-        private static Checkpoint _theaterCheckpoint;
         protected static TheaterContext _theaterContext;
+        public static IMapper _mapper;
 
         [AssemblyInitialize()]
         public static void AssemblyInit(TestContext context)
         {
-            _theaterCheckpoint = new Checkpoint { WithReseed = true };
-
             SqlConnectionStringBuilder _builder = new SqlConnectionStringBuilder
             {
                 InitialCatalog = "TheaterTestIntegration",
@@ -53,7 +55,21 @@ namespace Theater.Integration.Tests.Common
                 _theaterContext.Database.EnsureCreated();
             }
             catch (SqlException) { /*Could not delete, because database was not createad*/ }
-            //_theaterCheckpoint.Reset(_theaterConnectionString).Wait();
+        }
+
+        public void ConfigureAutomapper()
+        {
+            if (_mapper == null)
+            {
+                var mappingConfig = new MapperConfiguration(mc =>
+                {
+                    mc.AddProfile(new CredentialsMappingProfile());
+                    mc.AddProfile(new MoviesMappingProfile());
+                    mc.AddProfile(new RoomsMappingProfile());
+                    mc.AddProfile(new SectionsMappingProfile());
+                });
+                _mapper = mappingConfig.CreateMapper();
+            }
         }
     }
 }

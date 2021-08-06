@@ -5,9 +5,9 @@ using Theater.Domain.Sections;
 
 namespace Theater.Application.Sections
 {
-    public class MappingProfile : Profile
+    public class SectionsMappingProfile : Profile
     {
-        public MappingProfile()
+        public SectionsMappingProfile()
         {
             CreateMap<Section, SectionModel>().ForMember(sm => sm.ID, map => map.MapFrom(s => s.SectionID))
                                               .ForMember(sm => sm.AnimationType, map => map.MapFrom(s => s.AnimationType.GetName()))

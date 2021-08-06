@@ -16,10 +16,10 @@ namespace Theater.Infra.Data.Repositories
             _theaterContext = theaterContext;
         }
 
-        public void Delete(Movie movie)
+        public bool Delete(Movie movie)
         {
             _theaterContext.Remove(movie);
-            _theaterContext.SaveChanges();
+            return _theaterContext.SaveChanges() > 0;
         }
 
         public IEnumerable<Movie> GetAll()
@@ -39,17 +39,17 @@ namespace Theater.Infra.Data.Repositories
             return movies.FirstOrDefault(m => m.Tittle.Equals(tittle, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public void Insert(Movie movie)
+        public bool Insert(Movie movie)
         {
             _theaterContext.Movies.Add(movie);
-            _theaterContext.SaveChanges();
+            return _theaterContext.SaveChanges() > 0;
         }
 
-        public void Update(Movie movie)
+        public bool Update(Movie movie)
         {
             _theaterContext.Attach(movie);
             _theaterContext.Entry(movie).State = EntityState.Modified;
-            _theaterContext.SaveChanges();
+            return _theaterContext.SaveChanges() > 0;
         }
     }
 }

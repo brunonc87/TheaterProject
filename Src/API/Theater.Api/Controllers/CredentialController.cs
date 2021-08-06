@@ -1,8 +1,7 @@
-﻿using AutoMapper;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Theater.Application.Credentials.Commands;
-using Theater.Domain.Credentials;
 
 namespace Theater.Api.Controllers
 {
@@ -10,13 +9,11 @@ namespace Theater.Api.Controllers
     [ApiController]
     public class CredentialController : ControllerBase
     {
-        private readonly ICredentialsService _credentialsService;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public CredentialController(ICredentialsService credentialsService, IMapper mapper)
+        public CredentialController(IMediator mediator)
         {
-            _credentialsService = credentialsService;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -24,14 +21,12 @@ namespace Theater.Api.Controllers
         {
             try
             {
-                bool result = _credentialsService.Authenticate(_mapper.Map<Credential>(credentialCommand));
-                return Ok(result);
+                return Ok(_mediator.Send(credentialCommand));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }
