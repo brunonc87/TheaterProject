@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation.AspNetCore;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Theater.Application.Credentials;
-using Theater.Application.Movies;
-using Theater.Application.Rooms;
-using Theater.Application.Sections;
+using Theater.Api.Filters;
+using Theater.Application;
 using Theater.Domain.Credentials;
 using Theater.Domain.Movies;
 using Theater.Domain.Rooms;
@@ -24,12 +24,13 @@ namespace Theater.Api.Helpers
             services.AddTransient<IRoomsRepository, RoomsRepository>();
             services.AddTransient<ISectionsRepository, SectionsRepository>();
 
-            services.AddTransient<IMoviesService, MoviesService>();
-            services.AddTransient<ICredentialsService, CredentialsService>();
-            services.AddTransient<IRoomsService, RoomsService>();
-            services.AddTransient<ISectionsService, SectionsService>();
+            services.AddControllers(options => options.Filters.Add(typeof(CustomValidationFilter)))
+                .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true)
+                .AddFluentValidation(x => x.RegisterValidatorsFromAssembly(typeof(AppModule).Assembly));
+
+            services.AddAutoMapper(typeof(AppModule).Assembly);
+
+            services.AddMediatR(typeof(AppModule).Assembly);
         }
-
-
     }
 }

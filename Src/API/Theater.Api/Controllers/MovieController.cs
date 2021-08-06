@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using FluentValidation.Results;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Theater.Application.Movies;
+using System.Threading.Tasks;
 using Theater.Application.Movies.Commands;
 using Theater.Application.Movies.Models;
+using Theater.Application.Movies.Querys;
 using Theater.Domain.Movies;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,24 +16,20 @@ namespace Theater.Api.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        private readonly IMoviesService _movieService;
-        private readonly IMapper _mapper;
+        IMediator _mediator;
 
-        public MovieController(IMoviesService movieService, IMapper mapper)
+        public MovieController(IMediator mediator)
         {
-            _movieService = movieService;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         // GET: api/<MovieController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                IEnumerable<Movie> movies = _movieService.GetMovies();
-
-                return Ok(_mapper.Map<IEnumerable<MovieModel>>(movies));
+                return Ok(await _mediator.Send(new AllMoviesQuery()));
             }
             catch (Exception ex)
             {
@@ -44,13 +39,11 @@ namespace Theater.Api.Controllers
 
         // GET api/<MovieController>/tittle
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                Movie movie = _movieService.GetById(id);
-
-                return Ok(_mapper.Map<MovieModel>(movie));
+                return Ok(await _mediator.Send(new MovieQuery(id)));
             }
             catch (Exception ex)
             {
@@ -60,17 +53,11 @@ namespace Theater.Api.Controllers
 
         // POST api/<MovieController>
         [HttpPost]
-        public IActionResult Add([FromBody] MovieAddCommand movieAddCommand)
+        public async Task<IActionResult> Add([FromBody] MovieAddCommand movieAddCommand)
         {
             try
             {
-                ValidationResult result = movieAddCommand.Validate();
-                if (!result.IsValid)
-                    return BadRequest(result.Errors.First().ErrorMessage);
-
-                _movieService.AddMovie(_mapper.Map<Movie>(movieAddCommand));
-
-                return Ok();
+                return Ok(await _mediator.Send(movieAddCommand));
             }
             catch (Exception ex)
             {
@@ -80,17 +67,11 @@ namespace Theater.Api.Controllers
 
         // PUT api/<MovieController>/5
         [HttpPut]
-        public IActionResult Update([FromBody] MovieUpdateCommand movieUpdateCommand)
+        public async Task<IActionResult> Update([FromBody] MovieUpdateCommand movieUpdateCommand)
         {
             try
             {
-                ValidationResult result = movieUpdateCommand.Validate();
-                if (!result.IsValid)
-                    return BadRequest(result.Errors.First().ErrorMessage);
-
-                _movieService.UpdateMovie(_mapper.Map<Movie>(movieUpdateCommand));
-
-                return Ok();
+                return Ok(await _mediator.Send(movieUpdateCommand));
             }
             catch (Exception ex)
             {
@@ -100,12 +81,11 @@ namespace Theater.Api.Controllers
 
         // DELETE api/<MovieController>/tittle
         [HttpDelete("{tittle}")]
-        public IActionResult Delete(string tittle)
+        public async Task<IActionResult> Delete(string tittle)
         {
             try
             {
-                _movieService.DeleteMovie(tittle);
-                return Ok();
+                return Ok(await _mediator.Send(new MovieDeleteCommand(tittle)));
             }
             catch (Exception ex)
             {

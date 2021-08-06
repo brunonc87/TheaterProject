@@ -31,11 +31,7 @@ namespace Theater.Api
                 });
             });
 
-            services.AddServiceDependency();
-
-            services.AddControllers();
-
-            services.AddApplicationMapping();
+            services.AddServiceDependency();            
 
             services.AddSwaggerGen(c =>
             {

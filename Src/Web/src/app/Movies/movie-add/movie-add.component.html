@@ -1,6 +1,6 @@
 <div class="tittle-bar">
-    <label class="tittle">Adicionar Filme</label>    
-</div>  
+    <label class="tittle">Adicionar Filme</label>
+</div>
 
 <div class="list-items">
     <table class="table">
@@ -9,25 +9,25 @@
               <th scope="row"></th>
               <td><label class="lbl" for="tittle">Titulo do filme</label></td>
               <td><input class="text-input" type="text" id="tittle" required minlength="1" maxlength="200"
-                [(ngModel)]="movie.tittle" name="tittle" placeholder="Digite o título..."></td>              
+                [(ngModel)]="movie.tittle" name="tittle" placeholder="Digite o título..."></td>
             </tr>
             <tr>
                 <th scope="row"></th>
                 <td><label class="lbl" for="description">Descriçao do filme</label></td>
-                <td><input class="text-input" type="text" id="description" required [(ngModel)]="movie.description" name="description" placeholder="Digite a descrição..."></td>              
+                <td><input class="text-input" type="text" id="description" required [(ngModel)]="movie.description" name="description" placeholder="Digite a descrição..."></td>
             </tr>
             <tr>
                 <th scope="row"></th>
                 <td><label class="lbl" for="duration">Duração do filme</label></td>
-                <td><input  type ="number" id="duration" required [(ngModel)]="movie.duration" name="duration" min="1" max="1440"> <label class="lbl">Min</label></td>              
+                <td><input  type ="number" id="duration" required [(ngModel)]="movie.duration" name="duration" min="1" max="1440"> <label class="lbl">Min</label></td>
               </tr>
         </tbody>
-    </table>        
-  </div>     
+    </table>
+  </div>
 
 <div class="tittle-bar">
-    <label class="tittle"></label>    
+    <label class="tittle"></label>
     <div class="add-button">
-        <a routerLink="/movie-add"><button class="buttons" (click)="addMovie();">Adicionar</button></a>
-    </div>        
-</div>  
+        <button class="buttons" (click)="addMovie();">Adicionar</button>
+    </div>
+</div>

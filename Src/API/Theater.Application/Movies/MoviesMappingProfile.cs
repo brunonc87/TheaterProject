@@ -5,9 +5,9 @@ using Theater.Domain.Movies;
 
 namespace Theater.Application.Movies
 {
-    public class MappingProfile : Profile
+    public class MoviesMappingProfile : Profile
     {
-        public MappingProfile()
+        public MoviesMappingProfile()
         {
             CreateMap<Movie, MovieModel>().ForMember(mm => mm.Id, map => map.MapFrom(m => m.MovieID));
             CreateMap<MovieAddCommand, Movie>();

@@ -1,65 +1,56 @@
-﻿using System;
+﻿using AutoMapper;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Theater.Application.Sections.Commands;
 using Theater.Domain.Movies;
 using Theater.Domain.Rooms;
 using Theater.Domain.Sections;
 
-namespace Theater.Application.Sections
+namespace Theater.Application.Sections.Handlers
 {
-    public class SectionsService : ISectionsService
+    public class AddSectionHandler : IRequestHandler<SectionAddCommand, bool>
     {
         private readonly ISectionsRepository _sectionRepository;
         private readonly IMoviesRepository _movieRepository;
         private readonly IRoomsRepository _roomRepository;
+        private readonly IMapper _mapper;
 
-        public SectionsService(ISectionsRepository sectionRepository, IMoviesRepository movieRepository, IRoomsRepository roomRepository)
+        public AddSectionHandler(ISectionsRepository sectionRepository, IMoviesRepository movieRepository, IRoomsRepository roomRepository, IMapper mapper)
         {
             _sectionRepository = sectionRepository;
             _movieRepository = movieRepository;
             _roomRepository = roomRepository;
+            _mapper = mapper;
         }
 
-        public void AddSection(Section section)
+        public Task<bool> Handle(SectionAddCommand request, CancellationToken cancellationToken)
         {
-            section.Validate();
-
-            Movie movieOnDB = _movieRepository.GetByTittle(section.Movie.Tittle);
+            Movie movieOnDB = _movieRepository.GetByTittle(request.MovieTittle);
 
             if (movieOnDB == null)
                 throw new Exception("Filme não localizado");
 
-            Room roomOnDB = _roomRepository.GetByName(section.Room.Name);
+            Room roomOnDB = _roomRepository.GetByName(request.RoomName);
 
             if (roomOnDB == null)
                 throw new Exception("Sala não localizada");
 
+            Section section = _mapper.Map<Section>(request);
             section.Movie = movieOnDB;
             section.Room = roomOnDB;
 
             List<Section> sectionsOnDB = _sectionRepository.GetAll().ToList();
 
-            if (sectionsOnDB.Where(s => s.Room.RoomID == section.Room.RoomID && 
+            if (sectionsOnDB.Where(s => s.Room.RoomID == section.Room.RoomID &&
                                  ((s.StartDate < section.StartDate && s.FinishDate > section.StartDate) ||
                                   (s.StartDate < section.FinishDate && s.FinishDate > section.FinishDate))).Any())
                 throw new Exception("Não é possivel criar uma seção no horario que já existe outra seção.");
 
-            _sectionRepository.Insert(section);
-        }
-
-        public void RemoveSection(int sectionID)
-        {
-            Section sectionOnDB = _sectionRepository.GetByID(sectionID);
-
-            if (!sectionOnDB.CanBeDeleted())
-                throw new Exception("Não é possível remover uma seção se estiver tão proxima de ocorrer.");
-
-            _sectionRepository.Delete(sectionID);
-        }
-
-        public IEnumerable<Section> GetSections()
-        {
-            return _sectionRepository.GetAll();
+            return Task.FromResult(_sectionRepository.Insert(section));
         }
     }
 }

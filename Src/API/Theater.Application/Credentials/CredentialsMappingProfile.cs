@@ -4,9 +4,9 @@ using Theater.Domain.Credentials;
 
 namespace Theater.Application.Credentials
 {
-    public class MappingProfile : Profile
+    public class CredentialsMappingProfile : Profile
     {
-        public MappingProfile()
+        public CredentialsMappingProfile()
         {
             CreateMap<CredentialCommand, Credential>();
         }
