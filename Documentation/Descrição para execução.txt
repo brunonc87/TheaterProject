@@ -11,7 +11,7 @@ Instalação
  - Baixar o repositorio do Git (https://github.com/brunonc87/TheaterProject), branch Master;
  - Executar o script de criação que está na pasta "Script_Create" em uma instancia do SQLServer;
  - Copiar o conteúdo da Pasta "BuildFiles" para um diretório desejado;
- - Editar o arquivo "TheaterConfigurations.json", configurando a conectionString, sem quebrar a estrutura do JSON;
+ - Editar o arquivo "appsettings.json", configurando a conectionString, sem quebrar a estrutura do JSON;
  - Executar o arquivo "Theater.Api.exe" para rodar a aplicação;
 
 
@@ -22,7 +22,7 @@ Utilizando a API
 
 Rodar em debug
  - Abra a solução no Visual Studio
- - No projeto "Theater API", na pasta "bin/debug/net5.0" colocar a conectionString no arquivo "TheaterConfigurations.json";
+ - No projeto "Theater API", na pasta "bin/debug/net5.0" colocar a conectionString no arquivo "appsettings.json";
  - Ao rodar em debug, executará automaticamente o Swagger para fazer as chamadas;
  - Para rodar os testes de integração, será utilizada a instancia localDB;
 
