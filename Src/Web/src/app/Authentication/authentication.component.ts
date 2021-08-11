@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from './authentication.service';
-import { UserCredential } from './credential';
+import { Router } from '@angular/router';
+import { GuardService } from '../shared/guard.service';
+import { AuthenticationService } from './shared/authentication.service';
+import { LoginInfoModel, UserCredential } from './shared/credential';
 
 @Component({
   selector: 'app-authentication',
@@ -11,18 +13,21 @@ export class AuthenticationComponent {
 
   usercredential: UserCredential = new UserCredential();
 
-  constructor(private authenticationService: AuthenticationService) { }
+  loginInfo: LoginInfoModel = new LoginInfoModel();
+
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router,
+              private guardService: GuardService) { }
 
   authenticate(): void {
-    this.authenticationService.authenticate(this.usercredential).subscribe(
-      (response) => { 
-        if (response == true) {
-          console.log(response);
-        } 
-        else {
-           alert("Senha inválida"); 
-          }},
-      (error) => { alert(error) }
-      );
+    this.authenticationService.authenticate(this.usercredential).subscribe((response) =>
+      {
+        this.loginInfo = response;
+        this.guardService.addAuthToken(this.loginInfo.token);
+        this.router.navigate(["/"]);
+      }, (error) =>
+      {
+        alert(error)
+      });
   }
 }

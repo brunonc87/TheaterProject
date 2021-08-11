@@ -6,6 +6,7 @@ using System;
 using Theater.Application.Credentials;
 using Theater.Application.Credentials.Commands;
 using Theater.Application.Credentials.Handlers;
+using Theater.Application.Credentials.Models;
 using Theater.Domain.Credentials;
 
 namespace Theater.Unit.Tests.Application
@@ -27,31 +28,34 @@ namespace Theater.Unit.Tests.Application
         }
 
         [TestMethod]
-        public void CredentialHandler_Should_Return_True_When_Login_And_Password_Are_The_Same_As_Database()
+        public void CredentialHandler_Should_Return_LoginInfoModel_When_Login_And_Password_Are_The_Same_As_Database()
         {
             string login = "admin";
             string password = "123";
             Credential credential = GetTestCredential(login, password);
             CredentialCommand credentialToAuthenticate = new CredentialCommand() { Login = login, Password = password };
             _credentialsRepository.Setup(x => x.RetrieveByLogonName(It.Is<string>(s => s == login))).Returns(credential);
-            
-            bool result = _credentialHandler.Handle(credentialToAuthenticate, new System.Threading.CancellationToken()).Result;
 
-            result.Should().BeTrue();
+            LoginInfoModel result = _credentialHandler.Handle(credentialToAuthenticate, new System.Threading.CancellationToken()).Result;
+
+            result.Should().NotBeNull();
+            result.Login.Should().Be(login);
+            result.Token.Should().NotBeEmpty();
+
         }
 
         [TestMethod]
-        public void CredentialHandler_Should_Return_False_When_User_Is_On_Database_And_Password_Is_Not_The_Same()
+        public void CredentialHandler_Should_Throw_Exception_When_User_Is_On_Database_And_Password_Is_Not_The_Same()
         {
             string login = "admin";
             string password = "123";
             Credential credential = GetTestCredential(login, password);
             CredentialCommand credentialToAuthenticate = new CredentialCommand() { Login = login, Password = "asdf" };
             _credentialsRepository.Setup(x => x.RetrieveByLogonName(It.Is<string>(s => s == login))).Returns(credential);
-            
-            bool result = _credentialHandler.Handle(credentialToAuthenticate, new System.Threading.CancellationToken()).Result;
 
-            result.Should().BeFalse();
+            Action act = () => _credentialHandler.Handle(credentialToAuthenticate, new System.Threading.CancellationToken());
+
+            act.Should().Throw<Exception>().WithMessage("Senha inválida");
         }
 
         [TestMethod]

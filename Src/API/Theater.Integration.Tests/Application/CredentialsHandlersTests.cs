@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Theater.Application.Credentials.Commands;
 using Theater.Application.Credentials.Handlers;
+using Theater.Application.Credentials.Models;
 using Theater.Domain.Credentials;
 using Theater.Infra.Data.Repositories;
 using Theater.Integration.Tests.Common;
@@ -28,7 +29,7 @@ namespace Theater.Integration.Tests.Application
         }
 
         [TestMethod]
-        public void CredentialHandler_Should_True_When_Login_And_PassWord_Are_Equal_Database_Login_And_PassWord()
+        public void CredentialHandler_Should_Return_LoginInfoModel_When_Login_And_PassWord_Are_Equal_Database_Login_And_PassWord()
         {
             string login = "user";
             string password = "secret";
@@ -48,13 +49,15 @@ namespace Theater.Integration.Tests.Application
             _credentialsRepository.AddCredential(credential);
 
 
-            var result = _credentialHandler.Handle(credentialToAuthenticate, new System.Threading.CancellationToken()).Result;
+            LoginInfoModel result = _credentialHandler.Handle(credentialToAuthenticate, new System.Threading.CancellationToken()).Result;
 
-            result.Should().BeTrue();
+            result.Should().NotBeNull();
+            result.Login.Should().Be(login);
+            result.Token.Should().NotBeEmpty();
         }
 
         [TestMethod]
-        public void CredentialHandler_Should_False_When_Login_Is_Equal_Database_Login_But_PassWord_Is_Different()
+        public void CredentialHandler_Should_Throw_Exception_When_Login_Is_Equal_Database_Login_But_PassWord_Is_Different()
         {
             string login = "user";
             string password = "secret";
@@ -73,9 +76,9 @@ namespace Theater.Integration.Tests.Application
 
             _credentialsRepository.AddCredential(credential);
 
-            bool result = _credentialHandler.Handle(credentialToAuthenticate, new System.Threading.CancellationToken()).Result;
+            Action act = () => _credentialHandler.Handle(credentialToAuthenticate, new System.Threading.CancellationToken());
 
-            result.Should().BeFalse();
+            act.Should().Throw<Exception>().WithMessage("Senha inválida");
         }
 
         [TestMethod]

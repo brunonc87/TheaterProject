@@ -1,3 +1,4 @@
+import { GuardService } from './../shared/guard.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ISection } from './section';
@@ -12,14 +13,14 @@ export class SectionListComponent implements OnInit {
 
   sections: ISection[] = [];
 
-  constructor(private sectionService: SectionService, private router: Router) { }
+  constructor(private sectionService: SectionService, private router: Router, private guardService: GuardService) { }
 
   ngOnInit(): void {
     this.getSections();
   }
 
   getSections(): void {
-    this.sectionService.getSections().subscribe((sections) => { this.sections = sections; }, (error) => {
+    this.sectionService.getSections(this.guardService.getAuthToken()).subscribe((sections) => { this.sections = sections; }, (error) => {
       console.log(error)
    });
 
@@ -28,7 +29,7 @@ export class SectionListComponent implements OnInit {
   deleteSection(sectionId: number): void {
     if (confirm("Tem certeza que deseja excluir a seção desejada?"))
     {
-      this.sectionService.deleteSection(sectionId).subscribe((response) => { this.reload()}, (error) => {
+      this.sectionService.deleteSection(sectionId, this.guardService.getAuthToken()).subscribe((response) => { this.reload()}, (error) => {
         alert(error)
      });
     }

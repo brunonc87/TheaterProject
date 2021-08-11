@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 using Theater.Application.Credentials.Commands;
 
 namespace Theater.Api.Controllers
@@ -17,11 +19,12 @@ namespace Theater.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CredentialCommand credentialCommand)
+        [AllowAnonymous]
+        public async Task<IActionResult> Post([FromBody] CredentialCommand credentialCommand)
         {
             try
             {
-                return Ok(_mediator.Send(credentialCommand));
+                return Ok(await _mediator.Send(credentialCommand));
             }
             catch (Exception ex)
             {

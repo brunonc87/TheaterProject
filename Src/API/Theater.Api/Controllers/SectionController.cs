@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Theater.Api.Controllers
 
         // GET: api/<MovieController>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             try
@@ -34,6 +36,7 @@ namespace Theater.Api.Controllers
 
         // POST api/<MovieController>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add([FromBody] SectionAddCommand sectionAddCommand)
         {
             try
@@ -48,6 +51,7 @@ namespace Theater.Api.Controllers
 
         // DELETE api/<MovieController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             try

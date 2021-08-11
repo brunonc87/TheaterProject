@@ -1,12 +1,10 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Theater.Application.Movies.Commands;
-using Theater.Application.Movies.Models;
 using Theater.Application.Movies.Querys;
-using Theater.Domain.Movies;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,6 +23,7 @@ namespace Theater.Api.Controllers
 
         // GET: api/<MovieController>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             try
@@ -39,6 +38,7 @@ namespace Theater.Api.Controllers
 
         // GET api/<MovieController>/tittle
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -53,6 +53,7 @@ namespace Theater.Api.Controllers
 
         // POST api/<MovieController>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add([FromBody] MovieAddCommand movieAddCommand)
         {
             try
@@ -67,6 +68,7 @@ namespace Theater.Api.Controllers
 
         // PUT api/<MovieController>/5
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] MovieUpdateCommand movieUpdateCommand)
         {
             try
@@ -81,6 +83,7 @@ namespace Theater.Api.Controllers
 
         // DELETE api/<MovieController>/tittle
         [HttpDelete("{tittle}")]
+        [Authorize]
         public async Task<IActionResult> Delete(string tittle)
         {
             try

@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -13,23 +13,26 @@ export class SectionService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getSections(): Observable<ISection[]>{
-    return this.httpClient.get<ISection[]>(this.sectionUrl).pipe(
+  getSections(token: string): Observable<ISection[]>{
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<ISection[]>(this.sectionUrl, { headers }).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err.error);
       })
     );
   }
 
-  addSection(sectionAddCommand: SectionAddCommand): Observable<any> {
-    return this.httpClient.post(this.sectionUrl, sectionAddCommand).pipe(
-      catchError((err: HttpErrorResponse) => { 
+  addSection(sectionAddCommand: SectionAddCommand, token: string): Observable<any> {
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.post(this.sectionUrl, sectionAddCommand, { headers }).pipe(
+      catchError((err: HttpErrorResponse) => {
         return throwError(err.error);
       }));
   }
 
-  deleteSection(sectionId: number): Observable<any> {
-    return this.httpClient.delete(`${this.sectionUrl}/${sectionId}`).pipe(
+  deleteSection(sectionId: number, token: string): Observable<any> {
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.delete(`${this.sectionUrl}/${sectionId}`, { headers }).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err.error);
       }));

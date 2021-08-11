@@ -1,3 +1,4 @@
+import { GuardService } from './../../shared/guard.service';
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { IMovie } from "../shared/movie";
@@ -10,9 +11,7 @@ import { MovieService } from "../shared/movie.service";
   })
   export class MovieListComponent implements OnInit{
 
-    constructor(private movieService: MovieService, private router: Router) {
-
-
+    constructor(private movieService: MovieService, private router: Router, private guardService: GuardService) {
     }
     movies: IMovie[] = [];
 
@@ -21,13 +20,13 @@ import { MovieService } from "../shared/movie.service";
     }
 
     getMovies(): void {
-        this.movieService.getMovies()
+        this.movieService.getMovies(this.guardService.getAuthToken())
             .subscribe(movies => this.movies = movies);
     }
 
     deleteMovie(movietittle: string): void {
         if(confirm("Tem certeza que deseja excluir o filme \""+movietittle+"\"?")) {
-        this.movieService.deleteMovie(movietittle).subscribe((response) => { this.reload() }, (error) => {
+        this.movieService.deleteMovie(movietittle, this.guardService.getAuthToken()).subscribe((response) => { this.reload() }, (error) => {
             alert(error)
         })};
     }
@@ -38,7 +37,6 @@ import { MovieService } from "../shared/movie.service";
 
      reload(): void {
          this.getMovies();
-
      }
 
      addMovie(): void {
