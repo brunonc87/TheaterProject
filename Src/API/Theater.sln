@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theater.Infra.Data", "Theat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theater.Infra.IoC", "Theater.Infra.IoC\Theater.Infra.IoC.csproj", "{BDECF8A2-D18F-44BD-AB79-21DDE62966CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theater.Unit.Tests", "Theater.Unit.Tests\Theater.Unit.Tests.csproj", "{2D9D2241-DCE5-46FF-AB0B-B97BA55E8D34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theater.Unit.Tests", "Theater.Unit.Tests\Theater.Unit.Tests.csproj", "{2D9D2241-DCE5-46FF-AB0B-B97BA55E8D34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theater.Integration.Tests", "Theater.Integration.Tests\Theater.Integration.Tests.csproj", "{193B040E-5296-45AA-8001-01379F1E94E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theater.Integration.Tests", "Theater.Integration.Tests\Theater.Integration.Tests.csproj", "{193B040E-5296-45AA-8001-01379F1E94E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theater.Infra.Settings", "Theater.Infra.Settings\Theater.Infra.Settings.csproj", "{C66E2075-16EA-4C7F-B2CC-623EF66697A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{193B040E-5296-45AA-8001-01379F1E94E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{193B040E-5296-45AA-8001-01379F1E94E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{193B040E-5296-45AA-8001-01379F1E94E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C66E2075-16EA-4C7F-B2CC-623EF66697A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C66E2075-16EA-4C7F-B2CC-623EF66697A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C66E2075-16EA-4C7F-B2CC-623EF66697A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C66E2075-16EA-4C7F-B2CC-623EF66697A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{BDECF8A2-D18F-44BD-AB79-21DDE62966CC} = {A51F83F4-C246-40C8-BFF8-4AF8265E2B20}
 		{2D9D2241-DCE5-46FF-AB0B-B97BA55E8D34} = {F7A54A6F-98A1-432B-AE66-BEDAE4B180BF}
 		{193B040E-5296-45AA-8001-01379F1E94E7} = {F7A54A6F-98A1-432B-AE66-BEDAE4B180BF}
+		{C66E2075-16EA-4C7F-B2CC-623EF66697A4} = {A51F83F4-C246-40C8-BFF8-4AF8265E2B20}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1D64D201-B426-4391-93A9-C00C048EF98C}

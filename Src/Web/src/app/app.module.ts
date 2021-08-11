@@ -1,3 +1,4 @@
+import { LocalStorageService } from './shared/local-storage.service';
 import { MovieAddComponent } from './movies/movie-add/movie-add.component';
 import { MovieEditComponent } from './movies/movie-edit/movie-edit.component';
 import { MovieListComponent } from './movies/movie-list/movie-list.component';

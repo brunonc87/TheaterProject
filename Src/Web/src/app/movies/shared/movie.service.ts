@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { IMovie, MovieAddCommand, MovieEditCommand } from './movie';3
@@ -13,36 +13,41 @@ export class MovieService {
 
   constructor(private httpCLient: HttpClient) { }
 
-  getMovies(): Observable<IMovie[]> {
-    return this.httpCLient.get<IMovie[]>(this.movieurl);
+  getMovies(token: string): Observable<IMovie[]> {
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpCLient.get<IMovie[]>(this.movieurl, { headers } );
   }
 
-  getMovie(movieId: number): Observable<IMovie> {
-    return this.httpCLient.get<IMovie>(`${this.movieurl}/${movieId}`).pipe(
+  getMovie(movieId: number, token: string): Observable<IMovie> {
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpCLient.get<IMovie>(`${this.movieurl}/${movieId}`, { headers }).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err.error);
       })
     );
   }
 
-  addMovie(movie: MovieAddCommand): Observable<any> {
-    return this.httpCLient.post<MovieAddCommand>(this.movieurl, movie).pipe(
+  addMovie(movie: MovieAddCommand, token: string): Observable<any> {
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpCLient.post<MovieAddCommand>(this.movieurl, movie, { headers }).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err.error);
       })
     );
   }
 
-  updateMovie(movie: MovieEditCommand): Observable<any> {
-    return this.httpCLient.put<MovieEditCommand>(this.movieurl, movie).pipe(
+  updateMovie(movie: MovieEditCommand, token: string): Observable<any> {
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpCLient.put<MovieEditCommand>(this.movieurl, movie, { headers }).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err.error);
       })
     );
   }
 
-  deleteMovie(movieTittle: string): Observable<any> {
-    return this.httpCLient.delete(`${this.movieurl}/${movieTittle}`).pipe(
+  deleteMovie(movieTittle: string, token: string): Observable<any> {
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpCLient.delete(`${this.movieurl}/${movieTittle}`, { headers }).pipe(
       catchError((err: HttpErrorResponse) => {
         return throwError(err.error);
       })

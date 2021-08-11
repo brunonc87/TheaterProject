@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Theater.Api.Controllers
 
         // GET: api/<RoomController>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             try

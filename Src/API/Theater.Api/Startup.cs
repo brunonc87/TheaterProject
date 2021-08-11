@@ -31,7 +31,7 @@ namespace Theater.Api
                 });
             });
 
-            services.AddServiceDependency();            
+            services.AddServiceDependency(Configuration);            
 
             services.AddSwaggerGen(c =>
             {
@@ -53,6 +53,7 @@ namespace Theater.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

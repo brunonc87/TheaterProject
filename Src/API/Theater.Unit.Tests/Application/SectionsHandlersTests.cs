@@ -5,8 +5,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Theater.Application.Sections;
 using Theater.Application.Sections.Commands;
 using Theater.Application.Sections.Handlers;
@@ -39,13 +37,29 @@ namespace Theater.Unit.Tests.Application
         {
             Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Room room1OnDb = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Section section1OnDb = new Section { SectionID = 300, StartDate = DateTime.Now, Value = 12, AnimationType = AnimationType.D3,
-                                                 AudioType = AudioType.Original, Movie = movie1OnDb, Room = room1OnDb };
-            
+            Section section1OnDb = new Section
+            {
+                SectionID = 300,
+                StartDate = DateTime.Now,
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movie1OnDb,
+                Room = room1OnDb
+            };
+
             Movie movie2OnDb = new Movie { MovieID = 600, Tittle = "filme 2", Description = "descrição 2", Duration = 120 };
             Room room2OnDb = new Room { RoomID = 3000, Name = "Sala 1", SeatsNumber = 23 };
-            Section section2OnDb = new Section { RoomID = 10000, StartDate = DateTime.Now, Value = 15, AnimationType = AnimationType.D2,
-                                                 AudioType = AudioType.Dubbed, Movie = movie2OnDb, Room = room2OnDb };
+            Section section2OnDb = new Section
+            {
+                RoomID = 10000,
+                StartDate = DateTime.Now,
+                Value = 15,
+                AnimationType = AnimationType.D2,
+                AudioType = AudioType.Dubbed,
+                Movie = movie2OnDb,
+                Room = room2OnDb
+            };
 
             _sectionsRepository.Setup(x => x.GetAll()).Returns(new List<Section> { section1OnDb, section2OnDb }).Verifiable();
 
@@ -69,9 +83,17 @@ namespace Theater.Unit.Tests.Application
             int sectionId = 300;
             Movie movieOnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Room roomOnDb = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Section sectionOnDb = new Section { SectionID = sectionId, StartDate = DateTime.Now.AddDays(11), Value = 12, AnimationType = AnimationType.D3,
-                                                AudioType = AudioType.Original, Movie = movieOnDb, Room = roomOnDb };
-                        
+            Section sectionOnDb = new Section
+            {
+                SectionID = sectionId,
+                StartDate = DateTime.Now.AddDays(11),
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movieOnDb,
+                Room = roomOnDb
+            };
+
             _sectionsRepository.Setup(x => x.GetByID(It.Is<int>(s => s == sectionId))).Returns(sectionOnDb).Verifiable();
             _sectionsRepository.Setup(x => x.Delete(It.Is<int>(s => s == sectionId))).Returns(true).Verifiable();
 
@@ -88,9 +110,17 @@ namespace Theater.Unit.Tests.Application
             int sectionId = 300;
             Movie movieOnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Room roomOnDb = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Section sectionOnDb = new Section { SectionID = 300, StartDate = DateTime.Now.AddDays(9), Value = 12, AnimationType = AnimationType.D3, 
-                                                AudioType = AudioType.Original, Movie = movieOnDb, Room = roomOnDb };
-            
+            Section sectionOnDb = new Section
+            {
+                SectionID = 300,
+                StartDate = DateTime.Now.AddDays(9),
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movieOnDb,
+                Room = roomOnDb
+            };
+
             _sectionsRepository.Setup(x => x.GetByID(It.Is<int>(s => s == sectionId))).Returns(sectionOnDb).Verifiable();
 
             DeleteSectionHandler deleteSectionHandler = new DeleteSectionHandler(_sectionsRepository.Object);
@@ -129,13 +159,28 @@ namespace Theater.Unit.Tests.Application
         public void AddSectionHandler_Should_Throw_Exception_When_Another_Section_is_Created_In_Same_Room_With_StartDate_After_Section_Start_And_Before_Section_End()
         {
             Room roomOnDB = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };            
-            Section sectionOnDb = new Section { SectionID = 300, StartDate = DateTime.Now.AddMinutes(10), Value = 12, AnimationType = AnimationType.D3,
-                                                AudioType = AudioType.Original, Movie = movie1OnDb, Room = roomOnDB };
+            Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
+            Section sectionOnDb = new Section
+            {
+                SectionID = 300,
+                StartDate = DateTime.Now.AddMinutes(10),
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movie1OnDb,
+                Room = roomOnDB
+            };
 
             Movie movie2OnDb = new Movie { MovieID = 600, Tittle = "filme 2", Description = "descrição 2", Duration = 120 };
-            SectionAddCommand sectionAddCommand = new SectionAddCommand { StartDate = DateTime.Now.AddMinutes(100), Value = 15, AnimationType = "2D",
-                                                                          AudioType = 2, MovieTittle = movie2OnDb.Tittle, RoomName = roomOnDB.Name };
+            SectionAddCommand sectionAddCommand = new SectionAddCommand
+            {
+                StartDate = DateTime.Now.AddMinutes(100),
+                Value = 15,
+                AnimationType = "2D",
+                AudioType = 2,
+                MovieTittle = movie2OnDb.Tittle,
+                RoomName = roomOnDB.Name
+            };
 
             _moviesRepository.Setup(x => x.GetByTittle(It.Is<string>(m => m == sectionAddCommand.MovieTittle))).Returns(movie2OnDb).Verifiable();
             _roomsRepository.Setup(x => x.GetByName(It.Is<string>(r => r == sectionAddCommand.RoomName))).Returns(roomOnDB).Verifiable();
@@ -148,7 +193,7 @@ namespace Theater.Unit.Tests.Application
             _moviesRepository.Verify();
             _roomsRepository.Verify();
             _sectionsRepository.Verify();
-            _sectionsRepository.VerifyNoOtherCalls();            
+            _sectionsRepository.VerifyNoOtherCalls();
         }
 
         [TestMethod]
@@ -156,12 +201,27 @@ namespace Theater.Unit.Tests.Application
         {
             Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Room roomOnDb = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Section sectionOnDb = new Section { SectionID = 300, StartDate = DateTime.Now.AddMinutes(100), Value = 12, AnimationType = AnimationType.D3, 
-                                                AudioType = AudioType.Original, Movie = movie1OnDb, Room = roomOnDb };
+            Section sectionOnDb = new Section
+            {
+                SectionID = 300,
+                StartDate = DateTime.Now.AddMinutes(100),
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movie1OnDb,
+                Room = roomOnDb
+            };
 
             Movie movie2OnDb = new Movie { MovieID = 600, Tittle = "filme 2", Description = "descrição 2", Duration = 120 };
-            SectionAddCommand sectionAddCommand = new SectionAddCommand { StartDate = DateTime.Now.AddMinutes(10), Value = 15, AnimationType = "2D",
-                                                                          AudioType = 2, MovieTittle = movie2OnDb.Tittle, RoomName = roomOnDb.Name };
+            SectionAddCommand sectionAddCommand = new SectionAddCommand
+            {
+                StartDate = DateTime.Now.AddMinutes(10),
+                Value = 15,
+                AnimationType = "2D",
+                AudioType = 2,
+                MovieTittle = movie2OnDb.Tittle,
+                RoomName = roomOnDb.Name
+            };
 
             _moviesRepository.Setup(x => x.GetByTittle(It.Is<string>(m => m == sectionAddCommand.MovieTittle))).Returns(movie2OnDb).Verifiable();
             _roomsRepository.Setup(x => x.GetByName(It.Is<string>(r => r == sectionAddCommand.RoomName))).Returns(roomOnDb).Verifiable();
@@ -182,13 +242,28 @@ namespace Theater.Unit.Tests.Application
         {
             Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Room room1OnDb = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Section sectionOnDb = new Section { SectionID = 300, StartDate = DateTime.Now.AddMinutes(10), Value = 12, AnimationType = AnimationType.D3,
-                                                AudioType = AudioType.Original, Movie = movie1OnDb, Room = room1OnDb };
+            Section sectionOnDb = new Section
+            {
+                SectionID = 300,
+                StartDate = DateTime.Now.AddMinutes(10),
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movie1OnDb,
+                Room = room1OnDb
+            };
 
             Movie movie2OnDb = new Movie { MovieID = 600, Tittle = "filme 2", Description = "descrição 2", Duration = 120 };
             Room room2OnDb = new Room { RoomID = 750, Name = "Sala 9", SeatsNumber = 40 };
-            SectionAddCommand sectionAddCommand = new SectionAddCommand { StartDate = DateTime.Now.AddMinutes(100), Value = 15, AnimationType = "2D",
-                                                                          AudioType = 2, MovieTittle = movie2OnDb.Tittle, RoomName = room2OnDb.Name };
+            SectionAddCommand sectionAddCommand = new SectionAddCommand
+            {
+                StartDate = DateTime.Now.AddMinutes(100),
+                Value = 15,
+                AnimationType = "2D",
+                AudioType = 2,
+                MovieTittle = movie2OnDb.Tittle,
+                RoomName = room2OnDb.Name
+            };
 
             _moviesRepository.Setup(x => x.GetByTittle(It.Is<string>(m => m == sectionAddCommand.MovieTittle))).Returns(movie2OnDb).Verifiable();
             _roomsRepository.Setup(x => x.GetByName(It.Is<string>(r => r == sectionAddCommand.RoomName))).Returns(room2OnDb).Verifiable();
@@ -213,13 +288,28 @@ namespace Theater.Unit.Tests.Application
         {
             Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Room room1OnDb = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Section sectionOnDb = new Section { SectionID = 300, StartDate = DateTime.Now.AddMinutes(100), Value = 12, AnimationType = AnimationType.D3,
-                                                AudioType = AudioType.Original, Movie = movie1OnDb, Room = room1OnDb };
+            Section sectionOnDb = new Section
+            {
+                SectionID = 300,
+                StartDate = DateTime.Now.AddMinutes(100),
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movie1OnDb,
+                Room = room1OnDb
+            };
 
             Movie movie2OnDb = new Movie { MovieID = 600, Tittle = "filme 2", Description = "descrição 2", Duration = 120 };
             Room room2OnDb = new Room { RoomID = 750, Name = "Sala 9", SeatsNumber = 40 };
-            SectionAddCommand sectionAddCommand = new SectionAddCommand { StartDate = DateTime.Now.AddMinutes(10), Value = 15, AnimationType = "2D",
-                                                                          AudioType = 2, MovieTittle = movie2OnDb.Tittle, RoomName = room2OnDb.Name };
+            SectionAddCommand sectionAddCommand = new SectionAddCommand
+            {
+                StartDate = DateTime.Now.AddMinutes(10),
+                Value = 15,
+                AnimationType = "2D",
+                AudioType = 2,
+                MovieTittle = movie2OnDb.Tittle,
+                RoomName = room2OnDb.Name
+            };
 
             _moviesRepository.Setup(x => x.GetByTittle(It.Is<string>(m => m == sectionAddCommand.MovieTittle))).Returns(movie2OnDb).Verifiable();
             _roomsRepository.Setup(x => x.GetByName(It.Is<string>(r => r == sectionAddCommand.RoomName))).Returns(room2OnDb).Verifiable();
@@ -242,13 +332,28 @@ namespace Theater.Unit.Tests.Application
         public void AddSectionHandler_Should_Add_Section_When_Another_Section_is_Created_In_Same_Room_With_StartDate_After_Section_End()
         {
             Room roomOnDb = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };            
-            Section sectionOnDb = new Section { SectionID = 300, StartDate = DateTime.Now.AddMinutes(140), Value = 12, AnimationType = AnimationType.D3, 
-                                                AudioType = AudioType.Original, Movie = movie1OnDb, Room = roomOnDb };
+            Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
+            Section sectionOnDb = new Section
+            {
+                SectionID = 300,
+                StartDate = DateTime.Now.AddMinutes(140),
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movie1OnDb,
+                Room = roomOnDb
+            };
 
             Movie movie2OnDb = new Movie { MovieID = 600, Tittle = "filme 2", Description = "descrição 2", Duration = 120 };
-            SectionAddCommand sectionAddCommand = new SectionAddCommand { StartDate = DateTime.Now.AddMinutes(10), Value = 15, AnimationType = "2D", 
-                                                                          AudioType = 2, MovieTittle = movie2OnDb.Tittle, RoomName = roomOnDb.Name };
+            SectionAddCommand sectionAddCommand = new SectionAddCommand
+            {
+                StartDate = DateTime.Now.AddMinutes(10),
+                Value = 15,
+                AnimationType = "2D",
+                AudioType = 2,
+                MovieTittle = movie2OnDb.Tittle,
+                RoomName = roomOnDb.Name
+            };
 
             _moviesRepository.Setup(x => x.GetByTittle(It.Is<string>(m => m == sectionAddCommand.MovieTittle))).Returns(movie2OnDb).Verifiable();
             _roomsRepository.Setup(x => x.GetByName(It.Is<string>(r => r == sectionAddCommand.RoomName))).Returns(roomOnDb).Verifiable();
@@ -272,12 +377,27 @@ namespace Theater.Unit.Tests.Application
         {
             Movie movie1OnDb = new Movie { MovieID = 100, Tittle = "filme 1", Description = "descrição 1", Duration = 150 };
             Room roomOnDb = new Room { RoomID = 150, Name = "Sala 7", SeatsNumber = 23 };
-            Section sectionOnDb = new Section { SectionID = 300, StartDate = DateTime.Now.AddMinutes(10), Value = 12, AnimationType = AnimationType.D3,
-                                                AudioType = AudioType.Original, Movie = movie1OnDb, Room = roomOnDb };
+            Section sectionOnDb = new Section
+            {
+                SectionID = 300,
+                StartDate = DateTime.Now.AddMinutes(10),
+                Value = 12,
+                AnimationType = AnimationType.D3,
+                AudioType = AudioType.Original,
+                Movie = movie1OnDb,
+                Room = roomOnDb
+            };
 
             Movie movie2OnDb = new Movie { MovieID = 600, Tittle = "filme 2", Description = "descrição 2", Duration = 120 };
-            SectionAddCommand sectionAddCommand = new SectionAddCommand { StartDate = DateTime.Now.AddMinutes(165), Value = 15, AnimationType = "2D", 
-                                                                            AudioType = 2, MovieTittle = movie2OnDb.Tittle, RoomName = roomOnDb.Name };
+            SectionAddCommand sectionAddCommand = new SectionAddCommand
+            {
+                StartDate = DateTime.Now.AddMinutes(165),
+                Value = 15,
+                AnimationType = "2D",
+                AudioType = 2,
+                MovieTittle = movie2OnDb.Tittle,
+                RoomName = roomOnDb.Name
+            };
 
             _moviesRepository.Setup(x => x.GetByTittle(It.Is<string>(m => m == sectionAddCommand.MovieTittle))).Returns(movie2OnDb).Verifiable();
             _roomsRepository.Setup(x => x.GetByName(It.Is<string>(r => r == sectionAddCommand.RoomName))).Returns(roomOnDb).Verifiable();
@@ -294,6 +414,6 @@ namespace Theater.Unit.Tests.Application
             _moviesRepository.Verify();
             _roomsRepository.Verify();
             _sectionsRepository.VerifyAll();
-        } 
+        }
     }
 }
